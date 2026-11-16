@@ -1,0 +1,33 @@
+name: CI
+on: [push, pull_request]
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_DB: dental_scheduler
+          POSTGRES_USER: dental
+          POSTGRES_PASSWORD: dental
+        ports: ['5432:5432']
+        options: >-
+          --health-cmd "pg_isready -U dental -d dental_scheduler"
+          --health-interval 10s --health-timeout 5s --health-retries 5
+    env:
+      DATABASE_URL: postgres://dental:dental@localhost:5432/dental_scheduler
+      APP_MODE: synthetic
+      PRACTICE_ID: 00000000-0000-4000-8000-000000000001
+      APP_ORIGIN: http://localhost:3000
+      RUN_DB_TESTS: '1'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+      - run: npm ci
+      - run: npm run db:migrate
+      - run: npm run typecheck
+      - run: npm test
+      - run: npm run build

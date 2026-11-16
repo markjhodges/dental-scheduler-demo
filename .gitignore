@@ -1,0 +1,8 @@
+node_modules/
+.next/
+.env
+.env.local
+Pearlinfo.md
+*.tsbuildinfo
+coverage/
+.npm-cache/

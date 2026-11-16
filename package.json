@@ -1,0 +1,30 @@
+{
+  "name": "dental-scheduler",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "worker": "node --env-file-if-exists=.env.local --import tsx src/worker.ts",
+    "db:migrate": "node --env-file-if-exists=.env.local --import tsx scripts/migrate.ts",
+    "db:reset": "node --env-file-if-exists=.env.local --import tsx scripts/reset-synthetic.ts",
+    "test": "node --env-file-if-exists=.env.local --import tsx --test tests/*.test.ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "next": "16.4.6",
+    "pg": "8.16.3",
+    "react": "19.3.1",
+    "react-dom": "19.3.1",
+    "zod": "4.6.7"
+  },
+  "devDependencies": {
+    "@types/node": "24.5.2",
+    "@types/pg": "8.15.5",
+    "@types/react": "19.1.13",
+    "@types/react-dom": "19.1.9",
+    "tsx": "4.20.5",
+    "typescript": "5.9.2"
+  }
+}
